@@ -10,6 +10,8 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { ManageProductComponent } from './manage-product/manage-product.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,15 @@ import { HomePageComponent } from './home-page/home-page.component';
     UserOrdersComponent,
     ManageOrdersComponent,
     ManageProductComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

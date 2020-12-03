@@ -5,7 +5,7 @@ import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 import {UserOrdersComponent} from './user-orders/user-orders.component';
 import {ManageOrdersComponent} from './manage-orders/manage-orders.component';
 import {ManageProductComponent} from './manage-product/manage-product.component';
-import {AppComponent} from './app.component';
+import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [];
 
@@ -13,11 +13,11 @@ const routes: Routes = [];
   imports: [
     RouterModule.forRoot([
       { path: '', component: HomePageComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'cart', component: ShoppingCartComponent },
       { path: 'my-orders', component: UserOrdersComponent },
       { path: 'orders', component: ManageOrdersComponent },
-      { path: 'products', component: ManageProductComponent },
-      { path: '**', component: HomePageComponent }
+      { path: 'products', component: ManageProductComponent }
     ])],
   exports: [RouterModule]
 })
