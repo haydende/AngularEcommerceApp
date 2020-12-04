@@ -8,4 +8,6 @@ import firebase from 'firebase';
 })
 export class AppComponent {
   title = 'EcommerceApp';
+
+  constructor() {}
 }

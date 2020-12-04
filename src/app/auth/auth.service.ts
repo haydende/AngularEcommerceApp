@@ -1,43 +1,27 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
-import AuthProvider = firebase.auth.AuthProvider;
-import {Observable, of} from 'rxjs';
+import User = firebase.User;
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private user: firebase.User;
-
-  constructor() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (this.user !== null) {
-        this.user.reload();
-      } else {
-        this.user = user;
-      }
-    });
+  constructor(private auth: AngularFireAuth) {
   }
 
-  GoogleAuth(): Promise<void> {
-    return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
+  get authState(): Observable<User> {
+    return this.auth.authState;
   }
 
-  Logout(): Promise<void> {
-    return firebase.auth().signOut();
+  googleLogin(): void {
+    this.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
   }
 
-  GetUser(): firebase.User {
-    return firebase.auth().currentUser;
-  }
-
-  private AuthLogin(provider: AuthProvider): Promise<void> {
-    return firebase.auth().signInWithPopup(provider)
-      .then((result) => {
-        console.log('Login successful!');
-      }).catch((error) => {
-        console.log('Login unsuccessful!');
-      });
+  logout(): void {
+    this.auth.signOut()
+      .then(r => console.log('Logout successful!'));
   }
 }
