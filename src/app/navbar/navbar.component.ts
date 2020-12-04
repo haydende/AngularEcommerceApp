@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth/auth.service';
+import firebase from 'firebase';
+import User = firebase.User;
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +9,9 @@ import {AuthService} from '../auth/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  active = 1;
   collapsed = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
   }
@@ -22,6 +23,10 @@ export class NavbarComponent implements OnInit {
       }).catch(() => {
         console.log('Log out unsuccessful!');
     });
+  }
+
+  get User(): User {
+    return this.authService.GetUser();
   }
 
 }

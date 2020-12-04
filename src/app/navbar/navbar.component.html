@@ -12,15 +12,15 @@
         </a>
       </li>
 
-      <li class="nav-item" ngbDropdown display="dynamic" >
+      <li *ngIf="!User" class="nav-item" ngbDropdown display="dynamic" >
         <a class="nav-link" [routerLink]="['/login']" tabindex="0" role="button" href="#">
           Log In
         </a>
       </li>
 
-      <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+      <li *ngIf="User" class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
         <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
-          Username
+          {{ User.displayName }}
         </a>
         <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
           <a ngbDropdownItem [routerLink]="['/my-orders']" href="#" (click)="$event.preventDefault()">My Orders</a>
