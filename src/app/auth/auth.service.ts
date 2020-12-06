@@ -11,7 +11,7 @@ import AuthProvider = firebase.auth.AuthProvider;
 })
 export class AuthService {
 
-  constructor(private auth: AngularFireAuth, private route: ActivatedRoute, private router: Router) {
+  constructor(private auth: AngularFireAuth) {
   }
 
   get authState(): Observable<User> {
@@ -19,13 +19,7 @@ export class AuthService {
   }
 
   googleLogin(): void {
-    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-    console.log('Starting google login');
-    this.login(new firebase.auth.GoogleAuthProvider(), returnUrl)
-      .then(() => {
-        console.log('This code is being executed!');
-      });
-    this.router.navigateByUrl('test');
+    this.login(new firebase.auth.GoogleAuthProvider());
   }
 
   logout(): void {
@@ -33,8 +27,7 @@ export class AuthService {
       .then(r => console.log('Logout successful!'));
   }
 
-  private login(provider: AuthProvider, returnUrl?: string): Promise<void> {
-    console.log('Redirecting...');
+  private login(provider: AuthProvider): Promise<void> {
     return this.auth.signInWithRedirect(provider);
   }
 }
