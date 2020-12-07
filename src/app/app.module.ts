@@ -18,6 +18,7 @@ import { AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import {CategoryService} from './category.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     }),
     AngularFireAuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
