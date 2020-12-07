@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
 import User = firebase.User;
 import {Observable} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
 import AuthProvider = firebase.auth.AuthProvider;
 
 @Injectable({
