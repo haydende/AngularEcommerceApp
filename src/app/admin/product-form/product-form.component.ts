@@ -8,15 +8,12 @@ import {Observable} from 'rxjs';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
+  categories$: Observable<any>;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {
+    this.categories$ = categoryService.getCategories().valueChanges();
+  }
 
   ngOnInit(): void {
   }
-
-  get categories$(): Observable<any> {
-    console.log('Getting categories');
-    return this.categoryService.getCategories().valueChanges();
-  }
-
 }
