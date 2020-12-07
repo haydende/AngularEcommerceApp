@@ -12,20 +12,22 @@
         </a>
       </li>
 
-      <li *ngIf="!(user$ | async) as user" class="nav-item" ngbDropdown display="dynamic">
+      <li *ngIf="!appUser" class="nav-item" ngbDropdown display="dynamic">
         <a class="nav-link" [routerLink]="['/login']" tabindex="0" role="button" href="#">
           Log In
         </a>
       </li>
 
-      <li *ngIf="(user$ | async) as user" class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+      <li *ngIf="appUser" class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
         <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
-          {{ user.displayName }}
+          {{ appUser.name }}
         </a>
         <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
           <a ngbDropdownItem [routerLink]="['/my-orders']" href="#" (click)="$event.preventDefault()">My Orders</a>
-          <a ngbDropdownItem [routerLink]="['/orders']" href="#" (click)="$event.preventDefault()">Manage Orders</a>
-          <a ngbDropdownItem [routerLink]="['/products']" href="#" (click)="$event.preventDefault()">Manage Products</a>
+          <ng-container *ngIf="appUser.isAdmin">
+            <a ngbDropdownItem [routerLink]="['/admin/orders']" href="#" (click)="$event.preventDefault()">Manage Orders</a>
+            <a ngbDropdownItem [routerLink]="['/admin/products']" href="#" (click)="$event.preventDefault()">Manage Products</a>
+          </ng-container>
           <a ngbDropdownItem [routerLink]="['/']" href="#" (click)="logout()">Log Out</a>
         </div>
       </li>
