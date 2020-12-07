@@ -10,6 +10,7 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductsComponent } from './products/products.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { AuthGuard } from './auth-guard.service';
+import { AdminAuthGuard } from './admin-auth-guard.service';
 
 @NgModule({
   imports: [
@@ -20,9 +21,9 @@ import { AuthGuard } from './auth-guard.service';
       { path: 'cart', component: ShoppingCartComponent },
       { path: 'checkout', component: CheckOutComponent, canActivate: [AuthGuard] },
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
-      { path: 'my-orders', component: UserOrdersComponent },
-      { path: 'admin/orders', component: ManageOrdersComponent },
-      { path: 'admin/products', component: ManageProductComponent }
+      { path: 'my-orders', component: UserOrdersComponent, canActivate: [AuthGuard] },
+      { path: 'admin/orders', component: ManageOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard]},
+      { path: 'admin/products', component: ManageProductComponent, canActivate: [AuthGuard, AdminAuthGuard] }
     ])],
   exports: [RouterModule]
 })
