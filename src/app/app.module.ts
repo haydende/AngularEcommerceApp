@@ -17,6 +17,7 @@ import { ProductsComponent } from './products/products.component';
 import { AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
 import { OrderSuccessComponent } from './order-success/order-success.component';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
     LoginComponent,
     CheckOutComponent,
     ProductsComponent,
-    OrderSuccessComponent
+    OrderSuccessComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

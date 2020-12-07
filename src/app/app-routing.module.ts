@@ -11,19 +11,48 @@ import { ProductsComponent } from './products/products.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { AuthGuard } from './auth-guard.service';
 import { AdminAuthGuard } from './admin-auth-guard.service';
+import {ProductFormComponent} from './admin/product-form/product-form.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '', component: HomePageComponent },
-      { path: 'products', component: ProductsComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'cart', component: ShoppingCartComponent },
-      { path: 'checkout', component: CheckOutComponent, canActivate: [AuthGuard] },
-      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
-      { path: 'my-orders', component: UserOrdersComponent, canActivate: [AuthGuard] },
-      { path: 'admin/orders', component: ManageOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard]},
-      { path: 'admin/products', component: ManageProductComponent, canActivate: [AuthGuard, AdminAuthGuard] }
+      {
+        path: '',
+        component: HomePageComponent
+      }, {
+        path: 'products',
+        component: ProductsComponent
+      }, {
+        path: 'login',
+        component: LoginComponent
+      }, {
+        path: 'cart',
+        component: ShoppingCartComponent
+      }, {
+        path: 'checkout',
+        component: CheckOutComponent,
+        canActivate: [AuthGuard]
+      }, {
+        path: 'order-success',
+        component: OrderSuccessComponent,
+        canActivate: [AuthGuard]
+      }, {
+        path: 'my-orders',
+        component: UserOrdersComponent,
+        canActivate: [AuthGuard]
+      }, {
+        path: 'admin/orders',
+        component: ManageOrdersComponent,
+        canActivate: [AuthGuard, AdminAuthGuard]
+      }, {
+        path: 'admin/products',
+        component: ManageProductComponent,
+        canActivate: [AuthGuard, AdminAuthGuard]
+      }, {
+        path: 'admin/products/new',
+        component: ProductFormComponent,
+        canActivate: [AuthGuard, AdminAuthGuard]
+      }
     ])],
   exports: [RouterModule]
 })
