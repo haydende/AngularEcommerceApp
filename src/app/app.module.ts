@@ -19,7 +19,7 @@ import {AngularFireModule} from '@angular/fire';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import {CategoryService} from './category.service';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProductService} from './product.service';
 
 @NgModule({
@@ -51,9 +51,10 @@ import {ProductService} from './product.service';
       messagingSenderId: '19914501030',
       appId: '1:19914501030:web:bb6aee54c558fa3f2e3d67',
       measurementId: 'G-2KC6HLJN0S'
-    })
+    }),
+    ReactiveFormsModule
   ],
-  providers: [AuthService, CategoryService, ProductService],
+  providers: [AuthService, CategoryService, ProductService, FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
