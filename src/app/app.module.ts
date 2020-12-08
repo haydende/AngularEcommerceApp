@@ -19,6 +19,8 @@ import {AngularFireModule} from '@angular/fire';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import {CategoryService} from './category.service';
+import {FormsModule} from '@angular/forms';
+import {ProductService} from './product.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import {CategoryService} from './category.service';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
+    AngularFireAuthModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyBE5mZiBikG-Wu31jjIkBAQydovgY7yXbo',
       authDomain: 'ecommerce-app-aa581.firebaseapp.com',
@@ -47,10 +51,9 @@ import {CategoryService} from './category.service';
       messagingSenderId: '19914501030',
       appId: '1:19914501030:web:bb6aee54c558fa3f2e3d67',
       measurementId: 'G-2KC6HLJN0S'
-    }),
-    AngularFireAuthModule
+    })
   ],
-  providers: [AuthService, CategoryService],
+  providers: [AuthService, CategoryService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
