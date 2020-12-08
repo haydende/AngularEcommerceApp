@@ -3,6 +3,7 @@ import {CategoryService} from '../../category.service';
 import {Observable} from 'rxjs';
 import {ProductService} from '../../product.service';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
@@ -15,7 +16,9 @@ export class ProductFormComponent implements OnInit {
   categories$: Observable<any>;
   form: FormGroup;
 
-  constructor(private categoryService: CategoryService,
+  constructor(
+              private router: Router,
+              private categoryService: CategoryService,
               private productService: ProductService,
               private fb: FormBuilder) {
     this.categories$ = categoryService.getCategories();
@@ -32,8 +35,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product): void {
-    console.log(product);
+    // console.log(product);
     this.productService.create(product);
+    this.router.navigate(['admin/products']);
   }
 
   get _title(): AbstractControl {
