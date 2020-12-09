@@ -44,7 +44,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product): void {
-    // console.log(product);
     if (this.key) {
       this.productService.update(this.key, this.product)
         .then(() => null);
@@ -55,6 +54,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   delete(): void {
+    console.log(this.key);
     if (confirm('Are you sure you want to delete this product?')) {
       this.productService.delete(this.key);
       this.router.navigate(['admin/products']);
