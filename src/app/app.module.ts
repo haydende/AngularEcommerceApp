@@ -42,6 +42,7 @@ import {ProductService} from './product.service';
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyBE5mZiBikG-Wu31jjIkBAQydovgY7yXbo',
@@ -52,7 +53,6 @@ import {ProductService} from './product.service';
       appId: '1:19914501030:web:bb6aee54c558fa3f2e3d67',
       measurementId: 'G-2KC6HLJN0S'
     }),
-    ReactiveFormsModule
   ],
   providers: [AuthService, CategoryService, ProductService, FormBuilder],
   bootstrap: [AppComponent]

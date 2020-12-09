@@ -22,9 +22,11 @@
     "@angular/platform-browser-dynamic": "~10.1.5",
     "@angular/router": "~10.1.5",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "angular-custom-validators": "^0.1.4",
     "bootstrap": "^4.5.0",
     "firebase": "^8.1.1",
     "firebase-tools": "^8.17.0",
+    "g": "^2.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

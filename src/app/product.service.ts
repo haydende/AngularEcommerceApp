@@ -15,13 +15,19 @@ export class ProductService {
         .catch(() => console.log('Product could not be submitted!'));
   }
 
+  update(key: string, product: AppProduct): Promise<void> {
+    return this.db.object(`/products/${key}`).update(product);
+  }
+
   getByKey(key: string): AngularFireObject<any> {
     return this.db.object(`/products/${key}`);
   }
 
   getAll(): AngularFireList<AppProduct> {
-    const products: AngularFireList<AppProduct> = this.db.list('/products');
-    console.log(products);
-    return products;
+    return this.db.list('/products');
+  }
+
+  delete(key: string): Promise<void> {
+    return this.db.object(`/products/${key}`).remove();
   }
 }
