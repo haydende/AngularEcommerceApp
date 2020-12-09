@@ -52,6 +52,10 @@ import {ProductFormComponent} from './admin/product-form/product-form.component'
         path: 'admin/products/new',
         component: ProductFormComponent,
         canActivate: [AuthGuard, AdminAuthGuard]
+      }, {
+        path: 'admin/products/:key',
+        component: ProductFormComponent,
+        canActivate: [AuthGuard, AdminAuthGuard]
       }
     ])],
   exports: [RouterModule]

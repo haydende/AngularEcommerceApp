@@ -1,7 +1,7 @@
 
 export interface AppProduct {
   title: string;
-  price: number;
+  price: string;
   category: string;
   imageUrl: string;
 }
