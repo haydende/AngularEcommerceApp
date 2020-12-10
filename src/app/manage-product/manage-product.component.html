@@ -2,49 +2,42 @@
   <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
 </p>
 <p>
-  <input
-    #query
-    (keyup)="filter(query.value)"
-    type="text" class="form-control" placeholder="Search...">
+  <mat-form-field>]
+    <mat-label>Search...</mat-label>
+    <input matInput #query (keyup)="filter(query.value)" type="text">
+    <button mat-button *ngIf="query.value" matSuffix mat-icon-button aria-label="Clear" (click)="query.value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
 </p>
 
-<data-table
-  [items]="items"
-  [itemCount]="itemCount"
-  (reload)="reloadItems($event)">
-    <data-table-column
-      [property]="'title'"
-      [header]="'Title'"
-      [sortable]="true"
-      [resizable]="true">
-    </data-table-column>
-    <data-table-column
-      [property]="'price'"
-      [header]="'Price'"
-      [sortable]="true"
-      [resizable]="true"
-      >
-        <ng-template #dataTableCell let-item="product">
-          {{ product.payload.val().price | currency:'GBP':true}}
-        </ng-template>
-    </data-table-column>
-</data-table>
+<table mat-table [dataSource]="dataSource" matSort>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th id="title">Title</th>
-      <th id="price">Price</th>
-      <th id="edit"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of filteredProducts">
-      <td> {{ p.payload.val().title }}</td>
-      <td> {{ p.payload.val().price | currency:'GBP':true}}</td>
-      <td>
-        <a [routerLink]="[p.key]">Edit</a>
-      </td>
-    </tr>
-  </tbody>
+  <!--  Title column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+    <th mat-cell *matCellDef="let product"> {{ product.payload.val().title }}</th>
+  </ng-container>
+
+  <!--  Price column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+    <th mat-cell *matCellDef="let product"> {{ product.payload.val().price | currency:'GBP':true}}</th>
+  </ng-container>
+
+  <!--  Category column -->
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+    <th mat-cell *matCellDef="let product"> {{ product.payload.val().category }}</th>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No matching data for the filter "{{query.value}}"</td>
+  </tr>
+
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
+

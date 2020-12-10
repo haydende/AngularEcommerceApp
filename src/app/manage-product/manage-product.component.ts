@@ -1,61 +1,58 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProductService} from '../product.service';
-import {Observable, Subscription} from 'rxjs';
-import {AppProduct} from '../model/app-product';
-import {SnapshotAction} from '@angular/fire/database';
-import {DataTableParams, DataTableResource } from 'angular-4-data-table';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { ProductService } from '../product.service';
+import { Subscription } from 'rxjs';
+import { AppProduct } from '../model/app-product';
+import { SnapshotAction } from '@angular/fire/database';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-manage-product',
   templateUrl: './manage-product.component.html',
   styleUrls: ['./manage-product.component.css']
 })
-export class ManageProductComponent implements OnInit, OnDestroy {
+export class ManageProductComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  displayedColumns: string[] = ['title', 'price', 'category'];
+  dataSource: MatTableDataSource<SnapshotAction<AppProduct>>;
   products: SnapshotAction<AppProduct>[];
-  filteredProducts: SnapshotAction<AppProduct>[];
-  tableResource: DataTableResource<SnapshotAction<AppProduct>>;
-  items: SnapshotAction<AppProduct>[] = [];
-  itemCount: number;
   productSubscription: Subscription;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(private productService: ProductService) {
+    this.dataSource = new MatTableDataSource();
     this.productSubscription = this.productService.getAll().snapshotChanges()
       .subscribe(products => {
-        this.filteredProducts = this.products = products.map((li) => {
-          // console.log(li);
+        this.dataSource.data = products;
+        this.products = products.map((li) => {
           return li;
         });
-        this.initialiseTable(products);
       });
   }
 
   filter(query: string): void {
-    this.filteredProducts = (query)
-      ? this.products.filter(p => p.payload.val().title.toLowerCase().includes(query.toLowerCase()))
-      : this.products;
-  }
+    this.dataSource.filter = query.toLowerCase();
 
-  reloadItems(params: DataTableParams): void {
-    if (!this.tableResource) { return; }
-    this.tableResource.query(params)
-      .then(items => this.items = items);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   ngOnInit(): void {
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.filterPredicate =
+      (data, query: string) => data.payload.val().title.toLowerCase().includes(query);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
   }
-
-  private initialiseTable(products: SnapshotAction<AppProduct>[]): void {
-    this.tableResource = new DataTableResource(products);
-    this.tableResource.query({ offset: 0 })
-      .then(items => this.items = items);
-    this.tableResource.count()
-      .then(count => this.itemCount = count);
-  }
-
-
 }
