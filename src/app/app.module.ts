@@ -4,6 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DataTableModule } from 'angular-4-data-table';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { UserOrdersComponent } from './user-orders/user-orders.component';
@@ -14,13 +15,13 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/auth.service';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ProductsComponent } from './products/products.component';
-import { AngularFireAuthModule} from '@angular/fire/auth';
-import {AngularFireModule} from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
-import {CategoryService} from './category.service';
-import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ProductService} from './product.service';
+import { CategoryService } from './category.service';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductService } from './product.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {ProductService} from './product.service';
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
+    DataTableModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyBE5mZiBikG-Wu31jjIkBAQydovgY7yXbo',
       authDomain: 'ecommerce-app-aa581.firebaseapp.com',
