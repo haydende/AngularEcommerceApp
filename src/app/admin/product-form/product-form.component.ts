@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../../category.service';
 import {Observable} from 'rxjs';
 import {ProductService} from '../../product.service';
@@ -37,7 +37,7 @@ export class ProductFormComponent implements OnInit {
       });
     }
 
-    this.categories$ = categoryService.getCategories();
+    this.categories$ = categoryService.getAll().snapshotChanges();
   }
 
   ngOnInit(): void {
