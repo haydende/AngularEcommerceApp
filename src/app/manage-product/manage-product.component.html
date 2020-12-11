@@ -4,8 +4,8 @@
 
 <div class="mat-app-background basic-container">
   <mat-form-field class="product-filter">
-    <mat-label></mat-label>
-    <input matInput type="text" [(ngModel)]="this.query" (keyup)="filter(query)">
+    <mat-label for="search">Search...</mat-label>
+    <input id="search" matInput type="text" [(ngModel)]="this.query" (keyup)="filter(query)">
     <button mat-button *ngIf="this.query" matSuffix mat-icon-button aria-label="Clear" (click)="this.query=''">
       <mat-icon aria-hidden="false">close</mat-icon>
     </button>
@@ -30,6 +30,12 @@
   <ng-container matColumnDef="category">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
     <th mat-cell *matCellDef="let product"> {{ product.payload.val().category }}</th>
+  </ng-container>
+
+  <!-- Edit column -->
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <th mat-cell *matCellDef="let product"><a [routerLink]="product.key">Edit</a></th>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
