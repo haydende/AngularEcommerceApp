@@ -14,6 +14,7 @@ import {MatSort} from '@angular/material/sort';
 })
 export class ManageProductComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  query: string;
   displayedColumns: string[] = ['title', 'price', 'category'];
   dataSource: MatTableDataSource<SnapshotAction<AppProduct>>;
   products: SnapshotAction<AppProduct>[];

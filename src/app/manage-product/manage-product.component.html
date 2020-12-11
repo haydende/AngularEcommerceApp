@@ -1,15 +1,16 @@
 <p>
   <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
 </p>
-<p>
-  <mat-form-field>]
-    <mat-label>Search...</mat-label>
-    <input matInput #query (keyup)="filter(query.value)" type="text">
-    <button mat-button *ngIf="query.value" matSuffix mat-icon-button aria-label="Clear" (click)="query.value=''">
-      <mat-icon>close</mat-icon>
+
+<div class="mat-app-background basic-container">
+  <mat-form-field class="product-filter">
+    <mat-label></mat-label>
+    <input matInput type="text" [(ngModel)]="this.query" (keyup)="filter(query)">
+    <button mat-button *ngIf="this.query" matSuffix mat-icon-button aria-label="Clear" (click)="this.query=''">
+      <mat-icon aria-hidden="false">close</mat-icon>
     </button>
   </mat-form-field>
-</p>
+</div>
 
 <table mat-table [dataSource]="dataSource" matSort>
 
@@ -35,7 +36,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="4">No matching data for the filter "{{query.value}}"</td>
+    <td class="mat-cell" colspan="4">No matching data for the filter "{{query}}"</td>
   </tr>
 
 </table>
