@@ -13,6 +13,12 @@ export class CartService {
   constructor(private db: AngularFireDatabase) {
   }
 
+  async getCart(): Promise<any> {
+    console.log('Getting cartId');
+    const cartId = await this.getOrCreateCartId();
+    return this.db.object('/shopping-carts/' + cartId);
+  }
+
   async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {
     const cartId = await this.getOrCreateCartId();
     const item$ = await this.getCartItem(cartId, product.key);
@@ -24,7 +30,8 @@ export class CartService {
 
   private create(): ThenableReference {
     return this.db.list('/shopping-carts').push({
-      dateCreated: new Date().getTime()
+      dateCreated: new Date().getTime(),
+      items: []
     });
   }
 

@@ -1,6 +1,6 @@
 
 export interface AppProduct {
-  $key;
+  $key: string;
   title: string;
   price: string;
   category: string;

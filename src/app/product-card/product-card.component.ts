@@ -11,6 +11,8 @@ import {CartService} from '../cart.service';
 export class ProductCardComponent implements OnInit {
 
   @Input() p: SnapshotAction<AppProduct>;
+  @Input() showActions = true;
+  @Input() shoppingCart;
 
   constructor(private cartService: CartService) {
   }
@@ -20,6 +22,14 @@ export class ProductCardComponent implements OnInit {
 
   addToCart(product: SnapshotAction<AppProduct>): void {
     this.cartService.addToCart(product);
+  }
+
+  getQuantity(): number {
+    if (!this.shoppingCart) {
+      return 0;
+    }
+    const item = this.shoppingCart.items[this.p.key];
+    return item ? item.quantity : 0;
   }
 
 }
