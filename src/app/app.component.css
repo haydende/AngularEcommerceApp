@@ -1,0 +1,8 @@
+
+app-navbar {
+  z-index: 998;
+}
+
+.dropdown-menu {
+  z-index: 999;
+}

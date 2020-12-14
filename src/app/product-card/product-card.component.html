@@ -6,6 +6,6 @@
     <p class="card-text"> {{ p.payload.val().price | currency:'GBP':true}}</p>
   </div>
   <div class="card-footer">
-    <a [routerLink]="" class="btn btn-primary btn-block">Add to cart</a>
+    <button (click)="addToCart(p)" class="btn btn-primary btn-block">Add to cart</button>
   </div>
 </div>
