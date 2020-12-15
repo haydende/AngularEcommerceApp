@@ -1,4 +1,6 @@
+import {AppProduct} from './app-product';
+
 export interface ShoppingCartItem {
-  product: string;
+  product: AppProduct;
   quantity: number;
 }

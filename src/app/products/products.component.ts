@@ -16,9 +16,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   cart;
   category: string;
+
   cartServiceSubscription: Subscription;
   productServiceSubscription: Subscription;
   routeSubscription: Subscription;
+
   productList: SnapshotAction<AppProduct>[];
   filteredProductList: SnapshotAction<AppProduct>[];
 
