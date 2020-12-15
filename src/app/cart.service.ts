@@ -3,6 +3,8 @@ import {AngularFireDatabase, AngularFireObject, SnapshotAction} from '@angular/f
 import firebase from 'firebase';
 import {AppProduct} from './model/app-product';
 import {take} from 'rxjs/operators';
+import {ShoppingCart} from './model/shopping-cart';
+import {ShoppingCartItem} from './model/shopping-cart-item';
 import ThenableReference = firebase.database.ThenableReference;
 
 @Injectable({
@@ -13,7 +15,7 @@ export class CartService {
   constructor(private db: AngularFireDatabase) {
   }
 
-  async getCart(): Promise<any> {
+  async getCart(): Promise<AngularFireObject<ShoppingCart>> {
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
     return this.db.object('/shopping-carts/' + cartId);
@@ -44,7 +46,7 @@ export class CartService {
     return result.key;
   }
 
-  private async getCartItem(cartId: string, productId: string): Promise<AngularFireObject<any>> {
+  private async getCartItem(cartId: string, productId: string): Promise<AngularFireObject<ShoppingCartItem>> {
     return this.db.object(`/shopping-carts/${cartId}/items/${productId}`);
   }
 
@@ -52,7 +54,7 @@ export class CartService {
     const cartId = await this.getOrCreateCartId();
     const item$ = await this.getCartItem(cartId, product.key);
     item$.valueChanges().pipe(take(1))
-      .subscribe((p: any) => {
+      .subscribe((p: ShoppingCartItem) => {
         item$.update({product: product.key, quantity: (p?.quantity || 0) + change});
       });
   }
