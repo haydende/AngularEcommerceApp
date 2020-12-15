@@ -10,6 +10,11 @@ export class ShoppingCart {
     }
   }
 
+  getQuantityOf(productId: string): number {
+    const item = this.itemsMap[productId];
+    return item ? item.quantity : 0;
+  }
+
   get totalItems(): number {
     let totalItems = 0;
     for (const productId in this.items) {

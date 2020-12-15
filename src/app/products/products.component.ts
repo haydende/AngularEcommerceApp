@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {AppProduct} from '../model/app-product';
 import {SnapshotAction} from '@angular/fire/database';
 import {CartService} from '../cart.service';
+import {ShoppingCart} from '../model/shopping-cart';
 
 @Component({
   selector: 'app-products',
@@ -14,7 +15,7 @@ import {CartService} from '../cart.service';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
-  cart;
+  cart: ShoppingCart;
   category: string;
 
   cartServiceSubscription: Subscription;
