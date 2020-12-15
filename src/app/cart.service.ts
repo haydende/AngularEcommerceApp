@@ -19,7 +19,10 @@ export class CartService {
   async getCart(): Promise<Observable<ShoppingCart>> {
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId).valueChanges().pipe(map((value: ShoppingCart) => new ShoppingCart(value.items)));
+    return this.db.object('/shopping-carts/' + cartId).valueChanges()
+      .pipe(map((value: any) => {
+        return new ShoppingCart(value.items);
+      }));
   }
 
   async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {
@@ -56,7 +59,7 @@ export class CartService {
     const item$ = await this.getCartItem(cartId, product.key);
     item$.valueChanges().pipe(take(1))
       .subscribe((p: ShoppingCartItem) => {
-        item$.update({product: product.key, quantity: (p?.quantity || 0) + change});
+        item$.update({product: product.payload.val(), quantity: (p?.quantity || 0) + change});
       });
   }
 }
