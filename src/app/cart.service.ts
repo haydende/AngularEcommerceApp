@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase, AngularFireObject, SnapshotAction} from '@angular/fire/database';
 import firebase from 'firebase';
 import {AppProduct} from './model/app-product';
-import {take} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {ShoppingCart} from './model/shopping-cart';
 import {ShoppingCartItem} from './model/shopping-cart-item';
+import {Observable} from 'rxjs';
 import ThenableReference = firebase.database.ThenableReference;
 
 @Injectable({
@@ -15,10 +16,10 @@ export class CartService {
   constructor(private db: AngularFireDatabase) {
   }
 
-  async getCart(): Promise<AngularFireObject<ShoppingCart>> {
+  async getCart(): Promise<Observable<ShoppingCart>> {
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId);
+    return this.db.object('/shopping-carts/' + cartId).valueChanges().pipe(map((value: ShoppingCart) => new ShoppingCart(value.items)));
   }
 
   async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {

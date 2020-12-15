@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {AppUser} from '../model/app-user';
 import {CartService} from '../cart.service';
+import {ShoppingCart} from '../model/shopping-cart';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
   collapsed = true;
   appUser: AppUser;
-  shoppingCartTotalItems: number;
+  cart$: Observable<ShoppingCart>;
 
   constructor(
     private authService: AuthService,
@@ -22,14 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const cart$ = await this.cartService.getCart();
-    cart$.snapshotChanges().subscribe(snapshotAction => {
-      this.shoppingCartTotalItems = 0;
-      const cart = snapshotAction.payload.val();
-      for (const productId in cart.items) {
-        this.shoppingCartTotalItems += cart.items[productId].quantity;
-      }
-    });
+    this.cart$ = (await this.cartService.getCart());
   }
 
   logout(): void {
