@@ -1,16 +1,35 @@
 <div
   class="card">
-  <img [src]="p.payload.val().imageUrl" class="card-img-top" alt="...">
+  <img [src]="product.payload.val().imageUrl" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title"> {{ p.payload.val().title }}</h5>
-    <p class="card-text"> {{ p.payload.val().price | currency:'GBP':true}}</p>
+    <h5 class="card-title"> {{ product.payload.val().title }}</h5>
+    <p class="card-text"> {{ product.payload.val().price | currency:'GBP':true}}</p>
   </div>
   <div class="card-footer">
     <button
-      (click)="addToCart(p)"
+      *ngIf="getQuantity() === 0; else updateQuantity"
+      (click)="addToCart()"
       class="btn btn-primary btn-block">
-        Add to cart
+      Add to cart
     </button>
-    <div> {{ getQuantity() }}</div>
+    <ng-template #updateQuantity>
+      <div class="row no-gutters">
+        <div class="col-2 text-center">
+          <button
+            (click)="removeFromCart()"
+            class="btn btn-secondary btn-block">-
+          </button>
+        </div>
+        <div class="col text-center">
+          {{ getQuantity() }}
+        </div>
+        <div class="col-2 text-center">
+          <button
+            (click)="addToCart()"
+            class="btn btn-secondary btn-block">+
+          </button>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

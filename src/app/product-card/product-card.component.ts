@@ -10,7 +10,7 @@ import {CartService} from '../cart.service';
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input() p: SnapshotAction<AppProduct>;
+  @Input() product: SnapshotAction<AppProduct>;
   @Input() showActions = true;
   @Input() shoppingCart;
 
@@ -20,16 +20,19 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addToCart(product: SnapshotAction<AppProduct>): void {
-    this.cartService.addToCart(product);
+  addToCart(): void {
+    this.cartService.addToCart(this.product);
+  }
+
+  removeFromCart(): void {
+    this.cartService.removeFromCart(this.product);
   }
 
   getQuantity(): number {
     if (!this.shoppingCart) {
       return 0;
     }
-    const item = this.shoppingCart.items[this.p.key];
+    const item = this.shoppingCart.items[this.product.key];
     return item ? item.quantity : 0;
   }
-
 }

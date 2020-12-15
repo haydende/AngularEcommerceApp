@@ -20,12 +20,11 @@ export class CartService {
   }
 
   async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {
-    const cartId = await this.getOrCreateCartId();
-    const item$ = await this.getCartItem(cartId, product.key);
-    item$.valueChanges().pipe(take(1))
-      .subscribe((p: any) => {
-        item$.update({product: product.key, quantity: (p?.quantity || 0) + 1});
-      });
+    this.updateItemQuantity(product, 1);
+  }
+
+  async removeFromCart(product: SnapshotAction<AppProduct>): Promise<void> {
+    this.updateItemQuantity(product, -1);
   }
 
   private create(): ThenableReference {
@@ -49,4 +48,12 @@ export class CartService {
     return this.db.object(`/shopping-carts/${cartId}/items/${productId}`);
   }
 
+  private async updateItemQuantity(product: SnapshotAction<AppProduct>, change: number): Promise<void> {
+    const cartId = await this.getOrCreateCartId();
+    const item$ = await this.getCartItem(cartId, product.key);
+    item$.valueChanges().pipe(take(1))
+      .subscribe((p: any) => {
+        item$.update({product: product.key, quantity: (p?.quantity || 0) + change});
+      });
+  }
 }
