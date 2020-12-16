@@ -1,11 +1,21 @@
-import {AppProduct} from './app-product';
 
 export class ShoppingCartItem {
 
-  constructor(public product: AppProduct, public quantity: number) {
+  title: string;
+  price: number;
+  quantity: number;
+  category: string;
+  imageUrl: string;
+
+  constructor(product: any) {
+    this.title = product.title;
+    this.price = product.price;
+    this.category = product.category;
+    this.imageUrl = product.imageUrl;
+    this.quantity = product.quantity;
   }
 
   get totalPrice(): number {
-    return parseFloat(this.product.price) * this.quantity;
+    return this.price * this.quantity;
   }
 }

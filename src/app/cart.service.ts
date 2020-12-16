@@ -19,9 +19,9 @@ export class CartService {
   async getCart(): Promise<Observable<ShoppingCart>> {
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId).valueChanges()
+    return this.db.object('/shopping-carts/' + cartId).snapshotChanges()
       .pipe(map((value: any) => {
-        return new ShoppingCart(value.items);
+        return new ShoppingCart(value.payload.val().items);
       }));
   }
 
@@ -59,7 +59,13 @@ export class CartService {
     const item$ = await this.getCartItem(cartId, product.key);
     item$.valueChanges().pipe(take(1))
       .subscribe((p: ShoppingCartItem) => {
-        item$.update({product: product.payload.val(), quantity: (p?.quantity || 0) + change});
+        item$.update({
+          title: product.payload.val().title,
+          price: parseFloat(product.payload.val().price),
+          category: product.payload.val().category,
+          imageUrl: product.payload.val().imageUrl,
+          quantity: (p?.quantity || 0) + change
+        });
       });
   }
 }
