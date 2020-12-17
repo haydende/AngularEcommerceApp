@@ -25,7 +25,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.cart$ = (await this.cartService.getCart());
+    this.cartSubscription = (await this.cartService.getCart())
+      .subscribe((cart: any) => {
+        // console.log(cart);
+        this.cart = cart;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.cartSubscription.unsubscribe();
   }
 
   logout(): void {

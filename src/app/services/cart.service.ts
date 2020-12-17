@@ -20,10 +20,9 @@ export class CartService {
     // todo: All work concerning unpacking the data from SnapshotAction wrappers should be done here
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId).snapshotChanges()
-      .pipe(map((value: any) => {
-        return new ShoppingCart(value.payload.val().items);
-      }));
+    return this.db.object('/shopping-carts/' + cartId).snapshotChanges().pipe(map((value: any) => {
+      return new ShoppingCart(value.payload.val().items);
+    }));
   }
 
   async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {
