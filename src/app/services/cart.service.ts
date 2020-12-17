@@ -17,6 +17,7 @@ export class CartService {
   }
 
   async getCart(): Promise<Observable<ShoppingCart>> {
+    // todo: All work concerning unpacking the data from SnapshotAction wrappers should be done here
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
     return this.db.object('/shopping-carts/' + cartId).snapshotChanges()
@@ -41,13 +42,23 @@ export class CartService {
   }
 
   private async getOrCreateCartId(): Promise<string> {
-    const cartId = localStorage.getItem('cartId');
+    let cartId = localStorage.getItem('cartId');
+    let exists = false;
     if (cartId) {
+      console.log(cartId);
+      const snapshot = await this.db.database.ref(`shopping-carts/${cartId}/`).get();
+      exists = snapshot.exists();
+      console.log('Exists: ', exists);
+      if (!exists) {
+        cartId = this.create().key;
+        localStorage.setItem('cartId', cartId);
+      }
       return cartId;
+    } else {
+      cartId = this.create().key;
+      localStorage.setItem('cartId', cartId);
     }
-    const result = this.create();
-    localStorage.setItem('cartId', result.key);
-    return result.key;
+    return cartId;
   }
 
   private async getCartItem(cartId: string, productId: string): Promise<AngularFireObject<ShoppingCartItem>> {
