@@ -16,12 +16,15 @@ export class CartService {
   }
 
   async getCart(): Promise<Observable<ShoppingCart>> {
-    // todo: All work concerning unpacking the data from SnapshotAction wrappers should be done here
     console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId).snapshotChanges().pipe(map((value: any) => {
-      return new ShoppingCart(value.payload.val().items);
-    }));
+    return this.db.object('/shopping-carts/' + cartId)
+      .snapshotChanges()
+      .pipe(map((value: any) => {
+        const key = value.key;
+        const items = key ? value.payload.val().items : {};
+        return new ShoppingCart(items);
+      }));
   }
 
   async addToCart(product: ShoppingCartItem): Promise<void> {
@@ -33,10 +36,15 @@ export class CartService {
     this.updateItemQuantity(product, -1);
   }
 
+  async clearCart(): Promise<void> {
+    let cartId = await this.getOrCreateCartId();
+    await this.db.object(`shopping-carts/${cartId}`).remove();
+  }
+
   private create(): ThenableReference {
     return this.db.list('/shopping-carts').push({
       dateCreated: new Date().getTime(),
-      items: []
+      items: {placeholder: {quantity: 0}}
     });
   }
 

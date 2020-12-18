@@ -18,7 +18,6 @@
         {{ item.title }}
       </td>
       <td>
-        {{ item.quantity }}
         <product-quantity [product]="item" [shoppingCart]="cart"></product-quantity>
       </td>
       <td>
@@ -34,4 +33,5 @@
     </tr>
     </tfoot>
   </table>
+  <button (click)="clearCart()" class="btn btn-danger btn-sm">Clear</button>
 </ng-container>
