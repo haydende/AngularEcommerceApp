@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CartService} from '../../services/cart.service';
 import {ShoppingCart} from '../../model/shopping-cart';
 import {AppProduct} from '../../model/app-product';
-import {SnapshotAction} from '@angular/fire/database';
+import {ShoppingCartItem} from '../../model/shopping-cart-item';
 
 @Component({
   selector: 'product-quantity',
@@ -11,7 +11,7 @@ import {SnapshotAction} from '@angular/fire/database';
 })
 export class ProductQuantityComponent implements OnInit {
 
-  @Input() product;
+  @Input() product: ShoppingCartItem;
   @Input() shoppingCart: ShoppingCart;
 
   constructor(private cartService: CartService) {
@@ -28,7 +28,7 @@ export class ProductQuantityComponent implements OnInit {
     this.cartService.removeFromCart(this.product);
   }
 
-  getQuantity(product: SnapshotAction<AppProduct>): number {
+  getQuantity(product: AppProduct | ShoppingCartItem): number {
     const quantity = this.shoppingCart.getQuantityOf(product.key);
     return quantity ? quantity : 0;
   }

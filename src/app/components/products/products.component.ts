@@ -22,8 +22,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   productServiceSubscription: Subscription;
   routeSubscription: Subscription;
 
-  productList: SnapshotAction<AppProduct>[];
-  filteredProductList: SnapshotAction<AppProduct>[];
+  productList: AppProduct[] = [];
+  filteredProductList: AppProduct[];
 
   products$;
   categories$;
@@ -34,25 +34,28 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private route: ActivatedRoute
   ) {
-      this.products$ = productService.getAll().snapshotChanges();
-      this.categories$ = categoryService.getAll().snapshotChanges();
+    this.products$ = productService.getAll().snapshotChanges();
+    this.categories$ = categoryService.getAll().snapshotChanges();
 
-      this.productServiceSubscription = this.products$.subscribe((snapshotActionList) => {
-        this.productList = snapshotActionList;
+    this.productServiceSubscription = this.products$.subscribe((snapshotActionList: SnapshotAction<AppProduct>[]) => {
+      snapshotActionList.forEach(snapshotAction => {
+        console.log(snapshotAction.payload.val());
+        this.productList.push(new AppProduct(snapshotAction.payload.val(), snapshotAction.key));
+      });
 
-        this.routeSubscription = this.route.queryParamMap.subscribe(params => {
-          const category = params.get('category');
-          this.category = category ? category : '';
+      this.routeSubscription = this.route.queryParamMap.subscribe(params => {
+        const category = params.get('category');
+        this.category = category ? category : '';
 
-          this.filteredProductList = this.productList.filter((product: SnapshotAction<AppProduct>) => {
-            return this.category === ''
+        this.filteredProductList = this.productList.filter((product: AppProduct) => {
+          return this.category === ''
             // if the category param is empty, just return all items
             ? true
             // if the category param is not empty, return the result of matching category value
-            : product.payload.val().category.toLowerCase() === this.category.toLowerCase();
-          });
+            : product.category.toLowerCase() === this.category.toLowerCase();
         });
       });
+    });
   }
 
   async ngOnInit(): Promise<void> {

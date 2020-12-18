@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppProduct} from '../../model/app-product';
-import {SnapshotAction} from '@angular/fire/database';
 import {CartService} from '../../services/cart.service';
 import {ShoppingCart} from '../../model/shopping-cart';
+import {ShoppingCartItem} from '../../model/shopping-cart-item';
 
 @Component({
   selector: 'app-product-card',
@@ -11,7 +11,7 @@ import {ShoppingCart} from '../../model/shopping-cart';
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input() product: SnapshotAction<AppProduct>;
+  @Input() product: AppProduct;
   @Input() showActions = true;
   @Input() shoppingCart: ShoppingCart;
 
@@ -22,6 +22,6 @@ export class ProductCardComponent implements OnInit {
   }
 
   addToCart(): void {
-    this.cartService.addToCart(this.product);
+    this.cartService.addToCart(new ShoppingCartItem(this.product, this.product.key));
   }
 }

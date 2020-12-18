@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase, AngularFireObject, SnapshotAction} from '@angular/fire/database';
+import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
 import firebase from 'firebase';
-import {AppProduct} from '../model/app-product';
 import {map, take} from 'rxjs/operators';
 import {ShoppingCart} from '../model/shopping-cart';
 import {ShoppingCartItem} from '../model/shopping-cart-item';
@@ -25,11 +24,12 @@ export class CartService {
     }));
   }
 
-  async addToCart(product: SnapshotAction<AppProduct>): Promise<void> {
+  async addToCart(product: ShoppingCartItem): Promise<void> {
+    // console.log(product);
     this.updateItemQuantity(product, 1);
   }
 
-  async removeFromCart(product: SnapshotAction<AppProduct>): Promise<void> {
+  async removeFromCart(product: ShoppingCartItem): Promise<void> {
     this.updateItemQuantity(product, -1);
   }
 
@@ -44,10 +44,10 @@ export class CartService {
     let cartId = localStorage.getItem('cartId');
     let exists = false;
     if (cartId) {
-      console.log(cartId);
+      // console.log(cartId);
       const snapshot = await this.db.database.ref(`shopping-carts/${cartId}/`).get();
       exists = snapshot.exists();
-      console.log('Exists: ', exists);
+      // console.log('Exists: ', exists);
       if (!exists) {
         cartId = this.create().key;
         localStorage.setItem('cartId', cartId);
@@ -64,16 +64,17 @@ export class CartService {
     return this.db.object(`/shopping-carts/${cartId}/items/${productId}`);
   }
 
-  private async updateItemQuantity(product: SnapshotAction<AppProduct>, change: number): Promise<void> {
+  private async updateItemQuantity(product: ShoppingCartItem, change: number): Promise<void> {
+    console.log(product);
     const cartId = await this.getOrCreateCartId();
     const item$ = await this.getCartItem(cartId, product.key);
     item$.valueChanges().pipe(take(1))
       .subscribe((p: ShoppingCartItem) => {
         item$.update({
-          title: product.payload.val().title,
-          price: parseFloat(product.payload.val().price),
-          category: product.payload.val().category,
-          imageUrl: product.payload.val().imageUrl,
+          title: product.title,
+          price: product.price,
+          category: product.category,
+          imageUrl: product.imageUrl,
           quantity: (p?.quantity || 0) + change
         });
       });

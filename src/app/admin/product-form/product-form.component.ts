@@ -16,7 +16,7 @@ export class ProductFormComponent implements OnInit {
   categories$: Observable<any>;
   key: string;
   product: AppProduct = {
-    $key: null,
+    key: null,
     title: '',
     price: '',
     category: '',

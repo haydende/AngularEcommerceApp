@@ -1,18 +1,20 @@
 
 export class ShoppingCartItem {
 
+  key: string;
   title: string;
   price: number;
   quantity: number;
   category: string;
   imageUrl: string;
 
-  constructor(product: any) {
+  constructor(product: any, key: string) {
     this.title = product.title;
     this.price = product.price;
     this.category = product.category;
     this.imageUrl = product.imageUrl;
     this.quantity = product.quantity;
+    this.key = key;
   }
 
   get totalPrice(): number {

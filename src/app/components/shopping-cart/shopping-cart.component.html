@@ -4,7 +4,7 @@
     You have {{ cart.totalItems }} items in your shopping cart.
   </p>
   <table class="table">
-    <caption>Table of items in the user's shopping cart</caption>
+    <caption>Items added to your shopping cart</caption>
     <thead>
     <tr>
       <th id="productHeader">Product</th>
@@ -19,6 +19,7 @@
       </td>
       <td>
         {{ item.quantity }}
+        <product-quantity [product]="item" [shoppingCart]="cart"></product-quantity>
       </td>
       <td>
         {{ item.totalPrice | currency:'GBP':true}} ({{ item.price | currency:'GBP':true }})

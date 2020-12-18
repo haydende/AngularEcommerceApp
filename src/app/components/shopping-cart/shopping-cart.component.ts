@@ -21,6 +21,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.cartSubscription = (await this.cartService.getCart())
       .subscribe(cart => {
         this.cart = cart;
+        // console.log(cart);
       });
   }
 
