@@ -78,13 +78,18 @@ export class CartService {
     const item$ = await this.getCartItem(cartId, product.key);
     item$.valueChanges().pipe(take(1))
       .subscribe((p: ShoppingCartItem) => {
-        item$.update({
-          title: product.title,
-          price: product.price,
-          category: product.category,
-          imageUrl: product.imageUrl,
-          quantity: (p?.quantity || 0) + change
-        });
+        const q = (p?.quantity || 0) + change;
+        if (q === 0) {
+          item$.remove();
+        } else {
+          item$.update({
+            title: product.title,
+            price: product.price,
+            category: product.category,
+            imageUrl: product.imageUrl,
+            quantity: q
+          });
+        }
       });
   }
 }
