@@ -9,7 +9,7 @@
     <tr>
       <th id="productHeader">Product</th>
       <th id="quantityHeader">Quantity</th>
-      <th id="priceHeader">Price</th>
+      <th class="text-right" id="priceHeader">Price</th>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
       <td>
         <product-quantity [product]="item" [shoppingCart]="cart"></product-quantity>
       </td>
-      <td>
+      <td class="text-right">
         {{ item.totalPrice | currency:'GBP':true}} ({{ item.price | currency:'GBP':true }})
       </td>
     </tr>
@@ -29,7 +29,7 @@
     <tr>
       <th></th>
       <th></th>
-      <th id="totalPriceHeader">{{ cart.totalPrice | currency:'GBP':true }}</th>
+      <th class="text-right" id="totalPriceHeader">Total: {{ cart.totalPrice | currency:'GBP':true }}</th>
     </tr>
     </tfoot>
   </table>

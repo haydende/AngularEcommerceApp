@@ -7,6 +7,9 @@ export class ShoppingCart {
     for (const productId in itemsMap) {
       const item = itemsMap[productId];
       // console.log(item);
+      if (productId === 'placeholder') {
+        continue;
+      }
       this.items.push(new ShoppingCartItem(item, productId));
     }
   }
@@ -26,8 +29,8 @@ export class ShoppingCart {
 
   get totalPrice(): number {
     let totalPrice = 0;
-    for (const productId in this.items) {
-      totalPrice += this.items[productId].totalPrice;
+    for (const product of this.items) {
+      totalPrice += product.price * product.quantity;
     }
     return totalPrice;
   }
