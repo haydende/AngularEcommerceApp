@@ -5,6 +5,7 @@ import {AppProduct} from '../../model/app-product';
 import {ShoppingCartItem} from '../../model/shopping-cart-item';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'product-quantity',
   templateUrl: './product-quantity.component.html',
   styleUrls: ['./product-quantity.component.css']
@@ -29,7 +30,7 @@ export class ProductQuantityComponent implements OnInit {
   }
 
   getQuantity(product: AppProduct | ShoppingCartItem): number {
-    const quantity = this.shoppingCart.getQuantityOf(product.key);
+    const quantity = this.shoppingCart?.getQuantityOf(product.key);
     return quantity ? quantity : 0;
   }
 }

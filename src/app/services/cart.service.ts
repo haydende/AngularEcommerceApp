@@ -16,7 +16,7 @@ export class CartService {
   }
 
   async getCart(): Promise<Observable<ShoppingCart>> {
-    console.log('Getting cartId');
+    // console.log('Getting cartId');
     const cartId = await this.getOrCreateCartId();
     return this.db.object('/shopping-carts/' + cartId)
       .snapshotChanges()
@@ -37,7 +37,7 @@ export class CartService {
   }
 
   async clearCart(): Promise<void> {
-    let cartId = await this.getOrCreateCartId();
+    const cartId = await this.getOrCreateCartId();
     await this.db.object(`shopping-carts/${cartId}`).remove();
   }
 

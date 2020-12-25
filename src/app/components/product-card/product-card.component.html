@@ -3,7 +3,7 @@
   <img [src]="product.imageUrl" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title"> {{ product.title }}</h5>
-    <p class="card-text"> {{ product.price | currency:'GBP':true}}</p>
+    <p class="card-text"> {{ product.price | currency:'GBP':'symbol'}}</p>
   </div>
   <div *ngIf="showActions" class="card-footer">
     <button

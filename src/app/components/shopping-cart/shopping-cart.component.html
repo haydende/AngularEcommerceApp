@@ -1,7 +1,7 @@
 <h1>Shopping Cart</h1>
 <ng-container>
   <p>
-    You have {{ cart.totalItems }} items in your shopping cart.
+    You have {{ cart?.totalItems }} items in your shopping cart.
   </p>
   <table class="table">
     <caption>Items added to your shopping cart</caption>
@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of cart.items">
+    <tr *ngFor="let item of cart?.items">
       <td>
         <div [style.backgroundImage]="'url(' + item.imageUrl + ')'" class="thumbnail"></div>
       </td>
@@ -25,7 +25,7 @@
         <product-quantity [product]="item" [shoppingCart]="cart"></product-quantity>
       </td>
       <td class="text-right">
-        {{ item.totalPrice | currency:'GBP':true}} ({{ item.price | currency:'GBP':true }})
+        {{ item.totalPrice | currency:'GBP':'symbol'}} ({{ item.price | currency:'GBP':'symbol' }})
       </td>
     </tr>
     </tbody>
@@ -34,7 +34,7 @@
       <th></th>
       <th></th>
       <th></th>
-      <th class="text-right" id="totalPriceHeader">Total: {{ cart.totalPrice | currency:'GBP':true }}</th>
+      <th class="text-right" id="totalPriceHeader">Total: {{ cart?.totalPrice | currency:'GBP':'symbol' }}</th>
     </tr>
     </tfoot>
   </table>

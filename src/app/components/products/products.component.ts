@@ -39,7 +39,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     this.productServiceSubscription = this.products$.subscribe((snapshotActionList: SnapshotAction<AppProduct>[]) => {
       snapshotActionList.forEach(snapshotAction => {
-        console.log(snapshotAction.payload.val());
+        // console.log(snapshotAction.payload.val());
         this.productList.push(new AppProduct(snapshotAction.payload.val(), snapshotAction.key));
       });
 
@@ -66,11 +66,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('Unsubscribing from cartServiceSubscription');
+    // console.log('Unsubscribing from cartServiceSubscription');
     this.cartServiceSubscription.unsubscribe();
-    console.log('Unsubscribing from productServiceSubscription...');
+    // console.log('Unsubscribing from productServiceSubscription...');
     this.productServiceSubscription.unsubscribe();
-    console.log('Unsubscribing from routeSubscription...');
+    // console.log('Unsubscribing from routeSubscription...');
     this.routeSubscription.unsubscribe();
   }
 

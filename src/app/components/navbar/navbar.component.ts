@@ -21,10 +21,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private cartService: CartService
   ) {
-    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
   async ngOnInit(): Promise<void> {
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
     this.cartSubscription = (await this.cartService.getCart())
       .subscribe((cart: any) => {
         // console.log(cart);
