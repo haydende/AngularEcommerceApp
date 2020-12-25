@@ -1,12 +1,23 @@
 
+#productThumbnail {
+  width: 80px;
+}
+
 #productHeader {
   width: 170px;
 }
 
 #quantityHeader {
-  width: 130px;
+  width: 140px;
 }
 
 #priceHeader {
-  width: 150px;
+  width: 100px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-size: cover;
 }

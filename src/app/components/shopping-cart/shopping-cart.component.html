@@ -7,6 +7,7 @@
     <caption>Items added to your shopping cart</caption>
     <thead>
     <tr>
+      <th id="productThumbnail"></th>
       <th id="productHeader">Product</th>
       <th id="quantityHeader">Quantity</th>
       <th class="text-right" id="priceHeader">Price</th>
@@ -14,6 +15,9 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of cart.items">
+      <td>
+        <div [style.backgroundImage]="'url(' + item.imageUrl + ')'" class="thumbnail"></div>
+      </td>
       <td>
         {{ item.title }}
       </td>
@@ -27,6 +31,7 @@
     </tbody>
     <tfoot>
     <tr>
+      <th></th>
       <th></th>
       <th></th>
       <th class="text-right" id="totalPriceHeader">Total: {{ cart.totalPrice | currency:'GBP':true }}</th>
