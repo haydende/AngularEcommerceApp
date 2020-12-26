@@ -30,6 +30,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {ProductFilterComponent} from '../components/product-filter/product-filter.component';
 import {ProductCardComponent} from '../components/product-card/product-card.component';
 import {ProductQuantityComponent} from '../components/product-quantity/product-quantity.component';
+import {OrderService} from '../services/order.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import {ProductQuantityComponent} from '../components/product-quantity/product-q
       measurementId: 'G-2KC6HLJN0S'
     }),
   ],
-  providers: [AuthService, CategoryService, ProductService, FormBuilder],
+  providers: [AuthService, CategoryService, ProductService, OrderService, FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
