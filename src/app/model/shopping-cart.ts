@@ -3,7 +3,7 @@ import {ShoppingCartItem} from './shopping-cart-item';
 export class ShoppingCart {
   items: ShoppingCartItem[] = [];
 
-  constructor(public itemsMap: Map<string, ShoppingCartItem>) {
+  constructor(private itemsMap: Map<string, ShoppingCartItem>) {
     for (const productId in itemsMap) {
       const item = itemsMap[productId];
       // console.log(item);
