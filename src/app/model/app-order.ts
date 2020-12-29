@@ -1,4 +1,4 @@
-import {stringify} from 'querystring';
+import {OrderItem} from './OrderItem';
 
 export class AppOrder {
   key?: string;
@@ -6,7 +6,8 @@ export class AppOrder {
   address: string;
   city: string;
   date: Date;
-  user: string; // use the key of the user
+  items: OrderItem[];
+  public readonly user: string; // use the key of the user
 
   constructor(order: any, key?: string) {
     this.key = key || null;
@@ -15,5 +16,6 @@ export class AppOrder {
     this.city = order.city;
     this.date = order.date;
     this.user = order.user;
+    this.items = order.items || [];
   }
 }
