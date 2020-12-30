@@ -3,7 +3,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import firebase from 'firebase';
 import {Observable, of} from 'rxjs';
 import {AppUser} from '../model/app-user';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {UserService} from './user.service';
 import User = firebase.User;
 import AuthProvider = firebase.auth.AuthProvider;
@@ -24,11 +24,25 @@ export class AuthService {
     return this.auth.authState
       .pipe(switchMap((user) => {
         if (user) {
-          return this.userService.get(user.uid).valueChanges();
+          return this.userService.get(user.uid).snapshotChanges()
+            .pipe(map(userSnapshot => {
+              return {
+                key: userSnapshot.key,
+                name: userSnapshot.payload.val().name,
+                email: userSnapshot.payload.val().email,
+                isAdmin: userSnapshot.payload.val().isAdmin
+              };
+            }));
         } else {
           return of(null);
         }
       }));
+  }
+
+  get userUid(): Observable<string> {
+    return this.auth.authState.pipe(switchMap((user) => {
+      return user.uid || null;
+    }));
   }
 
   googleLogin(): void {

@@ -5,7 +5,7 @@ export class AppOrder {
   name: string;
   address: string;
   city: string;
-  date: Date;
+  date: number;
   items: OrderItem[];
   public readonly user: string; // use the key of the user
 
@@ -14,7 +14,7 @@ export class AppOrder {
     this.name = order.name;
     this.address = order.address;
     this.city = order.city;
-    this.date = order.date;
+    this.date = order.date || new Date().getTime();
     this.user = order.user;
     this.items = order.items || [];
   }
